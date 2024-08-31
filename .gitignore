@@ -5,6 +5,7 @@
 media/images/
 tmp/
 .config.py
+config.py
 passenger_wsgi.py
 
 # Byte-compiled / optimized / DLL files
