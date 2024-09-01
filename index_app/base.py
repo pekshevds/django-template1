@@ -1,3 +1,4 @@
+from pytils import translit
 import uuid
 from django.db import models
 from django.utils.dateformat import format
@@ -5,7 +6,9 @@ from django.utils.dateformat import format
 
 class Base(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    comment = models.TextField(verbose_name="Комментарий", null=True, blank=True)
+    comment = models.TextField(
+        verbose_name="Комментарий", null=False, blank=True, default=""
+    )
     created_at = models.DateTimeField(
         verbose_name="Дата создания", auto_now_add=True, null=True, blank=True
     )
@@ -27,10 +30,16 @@ class Directory(Base):
         default="",
         db_index=True,
     )
+    slug = models.SlugField(max_length=300, null=True, blank=True, unique=True)
     is_group = models.BooleanField(verbose_name="Это группа", default=False)
 
     def __str__(self) -> str:
         return f"{self.name}"
+
+    def save(self) -> None:
+        if not self.slug:
+            self.slug = translit.slugify(self.name)
+        return super().save()
 
     class Meta:
         ordering = ("name",)

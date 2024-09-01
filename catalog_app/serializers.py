@@ -6,12 +6,13 @@ from catalog_app.models import Good
 class ManufacturerSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=150)
+    slug = serializers.CharField(max_length=300)
 
 
 class CategorySerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=150)
-    # parent_id = serializers.UUIDField()
+    slug = serializers.CharField(max_length=300)
 
 
 class Submenu3Serializer(serializers.Serializer):
@@ -39,6 +40,7 @@ class GoodsImageSerializer(serializers.Serializer):
 class GoodSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=150)
+    slug = serializers.CharField(max_length=300)
     art = serializers.CharField(max_length=50, required=False, allow_blank=True)
     code = serializers.CharField(max_length=11, required=False, allow_blank=True)
     balance = serializers.DecimalField(max_digits=15, decimal_places=3, required=False)
@@ -70,6 +72,7 @@ class GoodSerializer(serializers.Serializer):
 class SimpleGoodSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=150)
+    slug = serializers.CharField(max_length=300)
     art = serializers.CharField(max_length=50, required=False, allow_blank=True)
     code = serializers.CharField(max_length=11, required=False, allow_blank=True)
     balance = serializers.DecimalField(max_digits=15, decimal_places=3, required=False)

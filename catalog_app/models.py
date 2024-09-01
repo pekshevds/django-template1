@@ -53,7 +53,6 @@ class Good(Directory):
         null=True,
         default=0,
     )
-    slug = models.SlugField(max_length=250, null=True, blank=True, unique=True)
     image = models.ForeignKey(
         Image,
         on_delete=models.PROTECT,
