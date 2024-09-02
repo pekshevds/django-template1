@@ -37,7 +37,7 @@ class Directory(Base):
         return f"{self.name}"
 
     def save(self) -> None:
-        if not self.slug:
+        if not self.slug or self.slug == "None":
             self.slug = translit.slugify(self.name)
         return super().save()
 

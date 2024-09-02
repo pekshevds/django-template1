@@ -22,10 +22,9 @@ from catalog_app.services.category import fetch_menu_by_category
 class ManufacturerView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request):
-        id = request.GET.get("id")
-        if id:
-            queryset = Manufacturer.objects.filter(id=id)
+    def get(self, request, slug: str = ""):
+        if slug:
+            queryset = Manufacturer.objects.filter(slug=slug)
             serializer = ManufacturerSerializer(queryset, many=True)
         else:
             queryset = Manufacturer.objects.all()
@@ -42,10 +41,9 @@ class ManufacturerView(APIView):
 class CategoryView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request):
-        id = request.GET.get("id")
-        if id:
-            queryset = Category.objects.filter(id=id)
+    def get(self, request, slug: str = ""):
+        if slug:
+            queryset = Category.objects.filter(slug=slug)
             serializer = CategorySerializer(queryset, many=True)
         else:
             queryset = Category.objects.all()
@@ -63,12 +61,11 @@ class GoodView(APIView):
     authentication_classes = [authentication.BasicAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request):
-        id = request.GET.get("id", 0)
-        if id:
-            queryset = Good.objects.filter(id=id)
+    def get(self, request, slug: str = ""):
+        if slug:
+            queryset = Good.objects.filter(slug=slug)
             good = queryset.first()
-            if good.is_group:
+            if good and good.is_group:
                 queryset = fetch_goods_queryset_by_group(group=good)
             serializer = GoodSerializer(queryset, many=True)
         else:
